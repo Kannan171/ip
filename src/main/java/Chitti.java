@@ -13,13 +13,13 @@ public class Chitti {
                 for (int i = 0; i < inputList.size(); i++) {
                     System.out.println((i + 1) + ". " + inputList.get(i));
                 }
-            } else if (input.substring(0,4).equals("mark")){
+            } else if (input.startsWith("mark")){
                 int ind = Integer.parseInt(input.substring(5));
                 Task task = inputList.get(ind-1);
                 task.doTask();
                 System.out.println("Nice! I've marked this task as done:");
                 System.out.println(task);
-            } else if (input.substring(0,6).equals("unmark")){
+            } else if (input.startsWith("unmark")){
                 int ind = Integer.parseInt(input.substring(7));
                 Task task = inputList.get(ind-1);
                 task.undoTask();
