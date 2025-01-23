@@ -10,7 +10,7 @@ public class Chitti {
         while (!input.equals("bye")){
             if (input.equals("list")) {
                 for (int i = 0; i < inputList.size(); i++) {
-                    System.out.println("" + (i + 1) + ". " + inputList.get(i));
+                    System.out.println((i + 1) + ". " + inputList.get(i));
                 }
             }
             else{
