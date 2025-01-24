@@ -11,7 +11,7 @@ public class Chitti {
             if (input.equals("list")) {
                 System.out.println("Here are the tasks in your list:");
                 for (int i = 0; i < taskList.size(); i++) {
-                    System.out.println((i + 1) + ". " + taskList.get(i));
+                    System.out.println((i + 1) + "." + taskList.get(i));
                 }
             } else if (input.startsWith("mark")){
                 int ind = Integer.parseInt(input.substring(5));
