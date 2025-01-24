@@ -25,6 +25,13 @@ public class Chitti {
                 task.undoTask();
                 System.out.println("OK, I've marked this task as not done yet:");
                 System.out.println(task);
+            } else if (input.startsWith("delete")){
+                int ind = Integer.parseInt(input.substring(7));
+                Task toRemove = taskList.get(ind-1);
+                taskList.remove(ind-1);
+                System.out.println("Noted. I've removed this task:");
+                System.out.println(toRemove);
+                System.out.println("Now you have " + taskList.size() + " tasks in the list.");
             } else {
                 try {
                     Task newTask;
