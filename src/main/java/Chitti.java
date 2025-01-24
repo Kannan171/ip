@@ -26,26 +26,41 @@ public class Chitti {
                 System.out.println("OK, I've marked this task as not done yet:");
                 System.out.println(task);
             } else {
-                Task newTask;
-                if (input.startsWith("deadline")){
-                    int ind = input.indexOf("/");
-                    String name = input.substring(9,ind - 1);
-                    String deadline = input.substring(ind + 4);
-                    newTask = new DeadlineTask(name, deadline);
-                } else if (input.startsWith("event")){
-                    int firstInd = input.indexOf("/");
-                    int secondInd = input.lastIndexOf("/");
-                    String name = input.substring(6, firstInd-1);
-                    String start = input.substring(firstInd + 6, secondInd -1);
-                    String end = input.substring(secondInd + 4);
-                    newTask = new EventTask(name, start,end);
-                } else {
-                    newTask = new ToDoTask(input.substring(5));
+                try {
+                    Task newTask;
+                    if (input.startsWith("deadline")) {
+                        int ind = input.indexOf("/");
+                        if (ind == -1 | ind == input.length() -1){
+                            throw new InvalidTaskException();
+                        }
+                        String name = input.substring(9, ind - 1);
+                        String deadline = input.substring(ind + 4);
+                        newTask = new DeadlineTask(name, deadline);
+                    } else if (input.startsWith("event")) {
+                        int firstInd = input.indexOf("/");
+                        int secondInd = input.lastIndexOf("/");
+                        if (firstInd == -1 | firstInd == secondInd | secondInd == input.length()-1){
+                            throw new InvalidTaskException();
+                        }
+                        String name = input.substring(6, firstInd - 1);
+                        String start = input.substring(firstInd + 6, secondInd - 1);
+                        String end = input.substring(secondInd + 4);
+                        newTask = new EventTask(name, start, end);
+                    } else if (input.startsWith("todo")) {
+                        if (input.length()==4){
+                            throw new InvalidTaskException();
+                        }
+                        newTask = new ToDoTask(input.substring(5));
+                    } else {
+                        throw new UnknownMessageException();
+                    }
+                    taskList.add(newTask);
+                    System.out.println("Got it. I've added this task:");
+                    System.out.println(newTask);
+                    System.out.println("Now you have " + taskList.size() + " tasks in the list.");
+                } catch (UnknownMessageException | InvalidTaskException e){
+                    System.out.println(e);
                 }
-                taskList.add(newTask);
-                System.out.println("Got it. I've added this task:");
-                System.out.println(newTask);
-                System.out.println("Now you have " + taskList.size() + " tasks in the list.");
             }
             input = s.nextLine();
         }
