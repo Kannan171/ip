@@ -1,11 +1,17 @@
+import java.io.BufferedWriter;
+import java.io.FileWriter;
 import java.util.Scanner;
 import java.util.ArrayList;
+import java.io.File;
+import java.io.IOException;
 public class Chitti {
+    private static final String FILE_PATH = "./chitti.txt";
     public static void main(String[] args) {
+
         System.out.println("Hello! I'm Chitti");
         System.out.println("What can I do for you?");
         Scanner s = new Scanner(System.in);
-        ArrayList<Task> taskList = new ArrayList<>();
+        ArrayList<Task> taskList = loadTasksFromFile();
         String input = s.nextLine();
         while (!input.equals("bye")){
             if (input.equals("list")) {
@@ -72,5 +78,33 @@ public class Chitti {
             input = s.nextLine();
         }
         System.out.println("Bye. Hope to see you again soon!");
+    }
+
+    private static ArrayList<Task> loadTasksFromFile() {
+        ArrayList<Task> taskList = new ArrayList<>();
+        File file = new File(FILE_PATH);
+        if (!file.exists()) {
+            return taskList;
+        }
+        try (Scanner scanner = new Scanner(file)) {
+            while (scanner.hasNextLine()) {
+                String line = scanner.nextLine();
+                taskList.add(Task.fromFileFormat(line));
+            }
+        } catch (IOException e) {
+            System.out.println("Error loading tasks from file: " + e.getMessage());
+        }
+        return taskList;
+    }
+
+    private static void saveTasksToFile(ArrayList<Task> taskList) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_PATH))) {
+            for (Task task : taskList) {
+                writer.write(task.toFileFormat());
+                writer.newLine();
+            }
+        } catch (IOException e) {
+            System.out.println("Error saving tasks to file: " + e.getMessage());
+        }
     }
 }

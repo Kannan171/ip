@@ -10,4 +10,9 @@ public class EventTask extends Task{
     public String toString(){
         return "[E]" + super.toString() + " (from: " + this.start + " to: " + this.end + ")";
     }
+
+    @Override
+    public String toFileFormat(){
+        return "E|" + super.toFileFormat() + "|" + this.start + "|" + this.end;
+    }
 }
