@@ -1,6 +1,14 @@
 package chitti;
 
+import java.util.ArrayList;
+
 public class Parser {
+    /**
+     * Handles the different commands that users can input
+     * @param input
+     * @param taskList
+     * @param ui
+     */
     void handleCommand(String input, TaskList taskList, Ui ui) {
         if (input.equals("list")) {
             ui.showTaskList(taskList.getTasks());
@@ -19,6 +27,9 @@ public class Parser {
             Task toRemove = taskList.getTask(ind);
             taskList.deleteTask(ind);
             ui.showTaskDeleted(toRemove, taskList.size());
+        } else if (input.startsWith("find")) {
+            String toFind = input.substring(5);
+            ui.showFoundList(taskList.findTasks(toFind));
         } else {
             try {
                 Task newTask = parseTask(input);
@@ -30,6 +41,13 @@ public class Parser {
         }
     }
 
+    /**
+     * Creates a task with the input
+     * @param input line that represents a task
+     * @return
+     * @throws InvalidTaskException
+     * @throws UnknownMessageException
+     */
     private Task parseTask(String input) throws InvalidTaskException, UnknownMessageException {
         if (input.startsWith("deadline")) {
             int ind = input.indexOf("/");

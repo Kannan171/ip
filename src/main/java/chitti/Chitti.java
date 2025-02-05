@@ -7,6 +7,7 @@ public class Chitti {
     private TaskList tasks;
     private Ui ui;
 
+
     public Chitti(String filePath) {
         ui = new Ui();
         storage = new Storage(filePath);
@@ -18,6 +19,9 @@ public class Chitti {
         }
     }
 
+    /**
+     * Runs the chatbot
+     */
     public void run() {
         ui.showWelcomeMessage();
         String input = ui.readCommand();

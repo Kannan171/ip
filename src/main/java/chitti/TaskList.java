@@ -28,4 +28,13 @@ public class TaskList {
     ArrayList<Task> getTasks() {
         return tasks;
     }
+    ArrayList<Task> findTasks(String search) {
+        ArrayList<Task> found = new ArrayList<>();
+        for (int i = 0; i < tasks.size(); i++){
+            if (tasks.get(i).toString().contains(search)){
+                found.add(tasks.get(i));
+            }
+        }
+        return found;
+    }
 }
