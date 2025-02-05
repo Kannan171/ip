@@ -75,6 +75,7 @@ public class Chitti {
                     System.out.println(e);
                 }
             }
+            saveTasksToFile(taskList);
             input = s.nextLine();
         }
         System.out.println("Bye. Hope to see you again soon!");

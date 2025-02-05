@@ -1,3 +1,5 @@
+import java.util.Objects;
+
 public class Task {
     private boolean isDone;
     private String name;
@@ -7,15 +9,19 @@ public class Task {
     }
 
     public static Task fromFileFormat(String line) {
-        if (line.charAt(0) == 'T'){
-            return new ToDoTask(line.substring(2));
-        } else if (line.charAt(0)=='D'){
-            String[] arr = line.split("\\|");
-            return new DeadlineTask(arr[1], arr[2]);
+        Task task;
+        String[] arr = line.split("\\|");
+        if (arr[0].equals("T")){
+            task = new ToDoTask(arr[2]);
+        } else if (arr[0].equals("D")){
+            return new DeadlineTask(arr[2], arr[3]);
         } else {
-            String[] arr = line.split("\\|");
-            return new EventTask(arr[1], arr[2], arr[3]);
+            return new EventTask(arr[2], arr[3], arr[4]);
         }
+        if (arr[1].equals("1")){
+            task.doTask();
+        }
+        return task;
     }
 
     public void doTask(){
