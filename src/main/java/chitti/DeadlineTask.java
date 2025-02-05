@@ -1,4 +1,4 @@
-package chitti.ui;
+package chitti;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;

@@ -28,7 +28,7 @@ test {
 }
 
 application {
-    mainClass.set("chitti.ui.Chitti")
+    mainClass.set("chitti.Chitti")
 }
 
 shadowJar {

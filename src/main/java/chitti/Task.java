@@ -1,4 +1,4 @@
-package chitti.ui;
+package chitti;
 
 public class Task {
     private boolean isDone;

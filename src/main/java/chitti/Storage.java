@@ -1,4 +1,4 @@
-package chitti.ui;
+package chitti;
 
 import java.io.BufferedWriter;
 import java.io.File;

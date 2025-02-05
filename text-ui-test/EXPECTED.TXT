@@ -1,4 +1,4 @@
-Hello! I'm chitti.ui.Chitti
+Hello! I'm chitti.Chitti
 What can I do for you?
 Got it. I've added this task:
 [T][ ] borrow book

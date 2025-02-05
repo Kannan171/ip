@@ -1,4 +1,4 @@
-package chitti.ui;
+package chitti;
 
 public class EventTask extends Task{
     private String start;

@@ -1,4 +1,4 @@
-package chitti.ui;
+package chitti;
 
 public class UnknownMessageException extends Exception{
     public UnknownMessageException(){

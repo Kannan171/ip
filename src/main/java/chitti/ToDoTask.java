@@ -1,4 +1,4 @@
-package chitti.ui;
+package chitti;
 
 public class ToDoTask extends Task{
     public ToDoTask(String name){

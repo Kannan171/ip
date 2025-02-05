@@ -1,4 +1,4 @@
-package chitti.ui;
+package chitti;
 
 import java.util.ArrayList;
 import java.util.Scanner;
