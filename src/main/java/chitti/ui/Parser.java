@@ -1,4 +1,4 @@
-package duke.ui;
+package chitti.ui;
 
 public class Parser {
     void handleCommand(String input, TaskList taskList, Ui ui) {

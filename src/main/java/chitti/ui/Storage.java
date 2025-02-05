@@ -1,4 +1,4 @@
-package duke.ui;
+package chitti.ui;
 
 import java.io.BufferedWriter;
 import java.io.File;

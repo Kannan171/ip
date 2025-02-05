@@ -1,4 +1,4 @@
-package duke.ui;
+package chitti.ui;
 
 public class Task {
     private boolean isDone;

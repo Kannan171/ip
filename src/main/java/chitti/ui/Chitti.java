@@ -1,4 +1,4 @@
-package duke.ui;
+package chitti.ui;
 
 import java.util.*;
 

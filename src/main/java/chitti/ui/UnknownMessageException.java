@@ -1,4 +1,4 @@
-package duke.ui;
+package chitti.ui;
 
 public class UnknownMessageException extends Exception{
     public UnknownMessageException(){

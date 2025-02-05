@@ -1,4 +1,4 @@
-package duke.ui;
+package chitti.ui;
 
 public class InvalidTaskException extends Exception{
     public InvalidTaskException(){
