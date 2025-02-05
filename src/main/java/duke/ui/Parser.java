@@ -1,3 +1,5 @@
+package duke.ui;
+
 public class Parser {
     void handleCommand(String input, TaskList taskList, Ui ui) {
         if (input.equals("list")) {

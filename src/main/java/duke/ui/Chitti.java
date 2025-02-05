@@ -1,4 +1,5 @@
-import java.io.*;
+package duke.ui;
+
 import java.util.*;
 
 public class Chitti {

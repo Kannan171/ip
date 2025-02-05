@@ -1,3 +1,5 @@
+package duke.ui;
+
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -5,7 +7,7 @@ public class Ui {
     private final Scanner scanner = new Scanner(System.in);
 
     void showWelcomeMessage() {
-        System.out.println("Hello! I'm Chitti");
+        System.out.println("Hello! I'm duke.ui.Chitti");
         System.out.println("What can I do for you?");
     }
 

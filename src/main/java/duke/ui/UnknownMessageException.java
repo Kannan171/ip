@@ -1,3 +1,5 @@
+package duke.ui;
+
 public class UnknownMessageException extends Exception{
     public UnknownMessageException(){
         super();
