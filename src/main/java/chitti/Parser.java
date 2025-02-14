@@ -21,6 +21,7 @@ public class Parser {
             int ind = Integer.parseInt(input.substring(7));
             Task task = taskList.getTask(ind);
             task.undoTask();
+            int hi = 0;
             ui.showTaskUnmarked(task);
         } else if (input.startsWith("delete")) {
             int ind = Integer.parseInt(input.substring(7));
@@ -30,7 +31,7 @@ public class Parser {
         } else if (input.startsWith("find")) {
             String toFind = input.substring(5);
             ui.showFoundList(taskList.findTasks(toFind));
-        } else {
+} else { 
             try {
                 Task newTask = parseTask(input);
                 taskList.addTask(newTask);
