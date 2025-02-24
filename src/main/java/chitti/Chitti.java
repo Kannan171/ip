@@ -18,6 +18,9 @@ public class Chitti {
             System.out.println(e);
             tasks = new TaskList(new ArrayList<>());
         }
+        assert ui != null : "Ui instance should not be null";
+        assert storage != null : "Storage instance should not be null";
+        assert parser != null : "Parser instance should not be null";
     }
 
     /**
