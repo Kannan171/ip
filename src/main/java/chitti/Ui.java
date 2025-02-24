@@ -4,54 +4,35 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Ui {
-    private final Scanner scanner = new Scanner(System.in);
-
-    void showWelcomeMessage() {
-        System.out.println("Hello! I'm duke.ui.Chitti");
-        System.out.println("What can I do for you?");
-    }
-
-    String readCommand() {
-        return scanner.nextLine();
-    }
-
-    void showExitMessage() {
-        System.out.println("Bye. Hope to see you again soon!");
-    }
-
-    void showTaskList(ArrayList<Task> tasks) {
-        System.out.println("Here are the tasks in your list:");
+    public String getTaskListString(ArrayList<Task> tasks) {
+        StringBuilder response = new StringBuilder("Here are the tasks in your list:\n");
         for (int i = 0; i < tasks.size(); i++) {
-            System.out.println((i + 1) + "." + tasks.get(i));
+            response.append((i + 1)).append(". ").append(tasks.get(i)).append("\n");
         }
+        return response.toString();
     }
 
-    void showFoundList(ArrayList<Task> tasks){
-        System.out.println("Here are the matching tasks in your list:");
-        for (int i = 0; i < tasks.size(); i++){
-            System.out.println((i+1)+"." + tasks.get(i));
+    public String getTaskMarkedString(Task task) {
+        return "Nice! I've marked this task as done:\n" + task;
+    }
+
+    public String getTaskUnmarkedString(Task task) {
+        return "OK, I've marked this task as not done yet:\n" + task;
+    }
+
+    public String getTaskDeletedString(Task task, int size) {
+        return "Noted. I've removed this task:\n" + task + "\nNow you have " + size + " tasks in the list.";
+    }
+
+    public String getTaskAddedString(Task task, int size) {
+        return "Got it. I've added this task:\n" + task + "\nNow you have " + size + " tasks in the list.";
+    }
+
+    public String getFoundListString(ArrayList<Task> tasks) {
+        StringBuilder response = new StringBuilder("Here are the matching tasks:\n");
+        for (int i = 0; i < tasks.size(); i++) {
+            response.append((i + 1)).append(". ").append(tasks.get(i)).append("\n");
         }
-    }
-
-    void showTaskMarked(Task task) {
-        System.out.println("Nice! I've marked this task as done:");
-        System.out.println(task);
-    }
-
-    void showTaskUnmarked(Task task) {
-        System.out.println("OK, I've marked this task as not done yet:");
-        System.out.println(task);
-    }
-
-    void showTaskDeleted(Task task, int size) {
-        System.out.println("Noted. I've removed this task:");
-        System.out.println(task);
-        System.out.println("Now you have " + size + " tasks in the list.");
-    }
-
-    void showTaskAdded(Task task, int size) {
-        System.out.println("Got it. I've added this task:");
-        System.out.println(task);
-        System.out.println("Now you have " + size + " tasks in the list.");
+        return response.toString();
     }
 }

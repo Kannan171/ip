@@ -9,35 +9,34 @@ public class Parser {
      * @param taskList
      * @param ui
      */
-    void handleCommand(String input, TaskList taskList, Ui ui) {
+    String handleCommand(String input, TaskList taskList, Ui ui) {
         if (input.equals("list")) {
-            ui.showTaskList(taskList.getTasks());
+            return ui.getTaskListString(taskList.getTasks());
         } else if (input.startsWith("mark")) {
             int ind = Integer.parseInt(input.substring(5));
             Task task = taskList.getTask(ind);
             task.doTask();
-            ui.showTaskMarked(task);
+            return ui.getTaskMarkedString(task);
         } else if (input.startsWith("unmark")) {
             int ind = Integer.parseInt(input.substring(7));
             Task task = taskList.getTask(ind);
             task.undoTask();
-            int hi = 0;
-            ui.showTaskUnmarked(task);
+            return ui.getTaskUnmarkedString(task);
         } else if (input.startsWith("delete")) {
             int ind = Integer.parseInt(input.substring(7));
             Task toRemove = taskList.getTask(ind);
             taskList.deleteTask(ind);
-            ui.showTaskDeleted(toRemove, taskList.size());
+            return ui.getTaskDeletedString(toRemove, taskList.size());
         } else if (input.startsWith("find")) {
             String toFind = input.substring(5);
-            ui.showFoundList(taskList.findTasks(toFind));
-} else { 
+            return ui.getFoundListString(taskList.findTasks(toFind));
+        } else {
             try {
                 Task newTask = parseTask(input);
                 taskList.addTask(newTask);
-                ui.showTaskAdded(newTask, taskList.size());
+                return ui.getTaskAddedString(newTask, taskList.size());
             } catch (UnknownMessageException | InvalidTaskException e) {
-                System.out.println(e);
+                return e.toString();
             }
         }
     }

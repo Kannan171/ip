@@ -6,11 +6,12 @@ public class Chitti {
     private Storage storage;
     private TaskList tasks;
     private Ui ui;
-
+    private Parser parser;
 
     public Chitti(String filePath) {
         ui = new Ui();
         storage = new Storage(filePath);
+        parser = new Parser();
         try {
             tasks = new TaskList(storage.loadTasksFromFile());
         } catch (Exception e) {
@@ -22,7 +23,7 @@ public class Chitti {
     /**
      * Runs the chatbot
      */
-    public void run() {
+    /**public void run() {
         ui.showWelcomeMessage();
         String input = ui.readCommand();
         Parser parser = new Parser();
@@ -34,9 +35,14 @@ public class Chitti {
         }
 
         ui.showExitMessage();
+    }**/
+    public String getResponse(String input) {
+        if (input.equalsIgnoreCase("bye")) {
+            return "Bye! Hope to see you again soon!";
+        }
+        return parser.handleCommand(input, tasks, ui);
     }
-
-    public static void main(String[] args) {
+    /**public static void main(String[] args) {
         new Chitti("./tasks.txt").run();
-    }
+    }**/
 }
