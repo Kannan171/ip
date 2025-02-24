@@ -4,76 +4,123 @@ import java.util.ArrayList;
 
 public class Parser {
     /**
-     * Handles the different commands that users can input
-     * @param input
-     * @param taskList
-     * @param ui
+     * Handles the different commands that users can input.
+     * @param input User's command as a string.
+     * @param taskList The list of tasks.
+     * @param ui The UI instance for responses.
      */
     String handleCommand(String input, TaskList taskList, Ui ui) {
-        if (input.equals("list")) {
-            return ui.getTaskListString(taskList.getTasks());
-        } else if (input.startsWith("mark")) {
-            int ind = Integer.parseInt(input.substring(5));
-            Task task = taskList.getTask(ind);
-            task.doTask();
-            return ui.getTaskMarkedString(task);
-        } else if (input.startsWith("unmark")) {
-            int ind = Integer.parseInt(input.substring(7));
-            Task task = taskList.getTask(ind);
-            task.undoTask();
-            return ui.getTaskUnmarkedString(task);
-        } else if (input.startsWith("delete")) {
-            int ind = Integer.parseInt(input.substring(7));
-            Task toRemove = taskList.getTask(ind);
-            taskList.deleteTask(ind);
-            return ui.getTaskDeletedString(toRemove, taskList.size());
-        } else if (input.startsWith("find")) {
-            String toFind = input.substring(5);
-            return ui.getFoundListString(taskList.findTasks(toFind));
-        } else {
-            try {
-                Task newTask = parseTask(input);
-                taskList.addTask(newTask);
-                return ui.getTaskAddedString(newTask, taskList.size());
-            } catch (UnknownMessageException | InvalidTaskException e) {
-                return e.toString();
-            }
+        assert input != null : "Input should not be null";
+
+        // Extract the command (first word of input)
+        String[] parts = input.split(" ", 2);
+        String command = parts[0];
+        String args = parts.length > 1 ? parts[1] : "";
+
+        switch (command) {
+            case "list":
+                return ui.getTaskListString(taskList.getTasks());
+
+            case "mark":
+                return handleMark(args, taskList, ui, true);
+
+            case "unmark":
+                return handleMark(args, taskList, ui, false);
+
+            case "delete":
+                return handleDelete(args, taskList, ui);
+
+            case "find":
+                return ui.getFoundListString(taskList.findTasks(args));
+
+            case "deadline":
+            case "event":
+            case "todo":
+                return handleTaskCreation(input, taskList, ui);
+
+            default:
+                return "I'm sorry, but I don't understand that command!";
         }
     }
 
     /**
-     * Creates a task with the input
-     * @param input line that represents a task
-     * @return
-     * @throws InvalidTaskException
-     * @throws UnknownMessageException
+     * Marks or unmarks a task based on the command.
+     */
+    private String handleMark(String args, TaskList taskList, Ui ui, boolean isMark) {
+        try {
+            int index = Integer.parseInt(args);
+            Task task = taskList.getTask(index);
+            if (isMark) {
+                task.doTask();
+                return ui.getTaskMarkedString(task);
+            } else {
+                task.undoTask();
+                return ui.getTaskUnmarkedString(task);
+            }
+        } catch (NumberFormatException | IndexOutOfBoundsException e) {
+            return "Invalid task number. Please enter a valid index.";
+        }
+    }
+
+    /**
+     * Handles task deletion.
+     */
+    private String handleDelete(String args, TaskList taskList, Ui ui) {
+        try {
+            int index = Integer.parseInt(args);
+            Task toRemove = taskList.getTask(index);
+            taskList.deleteTask(index);
+            return ui.getTaskDeletedString(toRemove, taskList.size());
+        } catch (NumberFormatException | IndexOutOfBoundsException e) {
+            return "Invalid task number. Please enter a valid index.";
+        }
+    }
+
+    /**
+     * Handles the creation of tasks.
+     */
+    private String handleTaskCreation(String input, TaskList taskList, Ui ui) {
+        try {
+            Task newTask = parseTask(input);
+            taskList.addTask(newTask);
+            return ui.getTaskAddedString(newTask, taskList.size());
+        } catch (UnknownMessageException | InvalidTaskException e) {
+            return e.toString();
+        }
+    }
+
+    /**
+     * Parses the input string and creates a task.
      */
     private Task parseTask(String input) throws InvalidTaskException, UnknownMessageException {
-        if (input.startsWith("deadline")) {
-            int ind = input.indexOf("/");
-            if (ind == -1 || ind == input.length() - 1) {
-                throw new InvalidTaskException();
-            }
-            String name = input.substring(9, ind - 1);
-            String deadline = input.substring(ind + 4);
-            return new DeadlineTask(name, deadline);
-        } else if (input.startsWith("event")) {
-            int firstInd = input.indexOf("/");
-            int secondInd = input.lastIndexOf("/");
-            if (firstInd == -1 || firstInd == secondInd || secondInd == input.length() - 1) {
-                throw new InvalidTaskException();
-            }
-            String name = input.substring(6, firstInd - 1);
-            String start = input.substring(firstInd + 6, secondInd - 1);
-            String end = input.substring(secondInd + 4);
-            return new EventTask(name, start, end);
-        } else if (input.startsWith("todo")) {
-            if (input.length() == 4) {
-                throw new InvalidTaskException();
-            }
-            return new ToDoTask(input.substring(5));
-        } else {
-            throw new UnknownMessageException();
+        String[] parts = input.split(" ", 2);
+        String command = parts[0];
+        String args = parts.length > 1 ? parts[1] : "";
+
+        switch (command) {
+            case "deadline":
+                int ind = args.indexOf("/");
+                if (ind == -1 || ind == args.length() - 1) throw new InvalidTaskException();
+                String name = args.substring(0, ind - 1);
+                String deadline = args.substring(ind + 4);
+                return new DeadlineTask(name, deadline);
+
+            case "event":
+                int firstInd = args.indexOf("/");
+                int secondInd = args.lastIndexOf("/");
+                if (firstInd == -1 || firstInd == secondInd || secondInd == args.length() - 1)
+                    throw new InvalidTaskException();
+                String eventName = args.substring(0, firstInd - 1);
+                String start = args.substring(firstInd + 6, secondInd - 1);
+                String end = args.substring(secondInd + 4);
+                return new EventTask(eventName, start, end);
+
+            case "todo":
+                if (args.isEmpty()) throw new InvalidTaskException();
+                return new ToDoTask(args);
+
+            default:
+                throw new UnknownMessageException();
         }
     }
 }
