@@ -28,9 +28,11 @@ public class MainWindow extends AnchorPane {
     @FXML
     public void initialize() {
         scrollPane.vvalueProperty().bind(dialogContainer.heightProperty());
+        dialogContainer.getChildren().add(
+                DialogBox.getBotDialog("Hello! I am Chitti, your assistant. How can I help you today?", botImage)
+        );
     }
 
-    /** Injects the Duke instance */
     public void setChitti(Chitti c) {
         chitti = c;
     }
@@ -45,7 +47,7 @@ public class MainWindow extends AnchorPane {
         String response = chitti.getResponse(input);
         dialogContainer.getChildren().addAll(
                 DialogBox.getUserDialog(input, userImage),
-                DialogBox.getDukeDialog(response, botImage)
+                DialogBox.getBotDialog(response, botImage)
         );
         userInput.clear();
     }
