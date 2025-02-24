@@ -17,7 +17,6 @@ import java.util.Objects;
 import javafx.scene.layout.Region;
 public class Main extends Application {
     private Chitti chitti = new Chitti("./tasks.txt");
-
     @Override
     public void start(Stage stage) {
         try {
