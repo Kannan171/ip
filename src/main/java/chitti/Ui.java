@@ -1,10 +1,13 @@
 package chitti;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Scanner;
 
 public class Ui {
     public String getTaskListString(ArrayList<Task> tasks) {
+        Collections.sort(tasks, (task1, task2) -> task1.toString().compareTo(task2.toString()));
+
         StringBuilder response = new StringBuilder("Here are the tasks in your list:\n");
         for (int i = 0; i < tasks.size(); i++) {
             response.append((i + 1)).append(". ").append(tasks.get(i)).append("\n");
